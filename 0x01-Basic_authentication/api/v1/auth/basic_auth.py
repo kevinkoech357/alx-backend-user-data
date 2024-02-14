@@ -60,10 +60,10 @@ class BasicAuth(Auth):
         the decoded Base64 authorization header.
         """
         if decoded_base64_authorization_header is None:
-            return None
+            return None, None
 
         if not isinstance(decoded_base64_authorization_header, str):
-            return None
+            return None, None
 
         if ":" not in decoded_base64_authorization_header:
             return None, None
