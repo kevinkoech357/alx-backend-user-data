@@ -74,7 +74,9 @@ class BasicAuth(Auth):
         return email, password
 
     def user_object_from_credentials(
-            self, user_email: str, user_pwd: str) -> TypeVar("User"):
+            self, user_email: str, user_pwd: str) -> TypeVar(
+        "User"
+    ):
         """
         Returns the User instance based on his email and password.
         """
@@ -86,7 +88,7 @@ class BasicAuth(Auth):
 
         # Retrieve users from the database based on email
         try:
-            users = User.search({'email': user_email})
+            users = User.search({"email": user_email})
         except Exception:
             return None
 
@@ -95,3 +97,22 @@ class BasicAuth(Auth):
                 return user
 
         return None
+
+    def current_user(self, request=None) -> TypeVar("User"):
+        """
+        Overloads Auth and retrieves the User instance for a request.
+        """
+        auth_header = self.authorization_header(request)
+
+        if not auth_header:
+            return None
+
+        encoded = self.extract_base64_authorization_header(auth_header)
+
+        decoded = self.decode_base64_authorization_header(encoded)
+
+        email, pasword = self.extract_user_credentials(decoded)
+
+        user = self.user_object_from_credentials(email, pasword)
+
+        return user
