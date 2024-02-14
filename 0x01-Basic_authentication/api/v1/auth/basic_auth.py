@@ -31,3 +31,21 @@ class BasicAuth(Auth):
         base64_token = authorization_header.split(" ")[1]
 
         return base64_token
+
+    def decode_base64_authorization_header(
+        self, base64_authorization_header: str
+    ) -> str:
+        """
+        Decode Base64 string and return decoded value as UTF8 string.
+        """
+        if base64_authorization_header is None:
+            return None
+        if not isinstance(base64_authorization_header, str):
+            return None
+
+        try:
+            decoded_bytes = base64.b64decode(base64_authorization_header)
+            decoded_string = decoded_bytes.decode("utf-8")
+            return decoded_string
+        except Exception:
+            return None
