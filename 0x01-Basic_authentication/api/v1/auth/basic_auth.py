@@ -1,4 +1,4 @@
-#!/usr/env/bin python3
+#!/usr/bin/env python3
 
 """
 Define BasicAuth class that inherits from Auth.
