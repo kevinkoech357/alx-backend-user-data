@@ -95,4 +95,7 @@ class BasicAuth(Auth):
         user = users[0]
 
         # Check if the provided password matches the user's password
-        return user if user.is_valid_password(user_pwd) else None
+        if not user.is_valid_password(user_pwd):
+            return None
+        
+        return user
