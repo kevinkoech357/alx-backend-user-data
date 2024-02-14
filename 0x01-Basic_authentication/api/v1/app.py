@@ -69,7 +69,7 @@ def unauthorized_access(error) -> dict:
     """
     Handles unauthorized access.
     """
-    return jsonify({"error": "Unathorized"}), 401
+    return jsonify({"error": "Unauthorized"}), 401
 
 
 @app.errorhandler(403)
