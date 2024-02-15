@@ -16,7 +16,8 @@ class BasicAuth(Auth):
     Inherit from Auth.
     """
 
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(self,
+                                            authorization_header: str) -> str:
         """
         Return Base64 part of the Authorization header.
         """
@@ -69,7 +70,8 @@ class BasicAuth(Auth):
         email, password = decoded_base64_authorization_header.rsplit(":", 1)
         return email, password
 
-    def user_object_from_credentials(self, user_email: str, user_pwd: str) -> TypeVar(
+    def user_object_from_credentials(
+        self, user_email: str, user_pwd: str) -> TypeVar(
         "User"
     ):
         """
