@@ -27,9 +27,24 @@ def view_one_user(user_id: str = None) -> str:
     """
     if user_id is None:
         abort(404)
+
+    if user_id == "me":
+        if not hasattr(request, "current_user") or request.current_user is None:
+            abort(404)
+        user_data = {
+            "id": request.current_user.id,
+            "email": request.current_user.email,
+            "first_name": request.current_user.first_name,
+            "last_name": request.current_user.last_name,
+            "created_at": str(request.current_user.created_at),
+            "updated_at": str(request.current_user.updated_at),
+        }
+        return jsonify(user_data)
+
     user = User.get(user_id)
     if user is None:
         abort(404)
+
     return jsonify(user.to_json())
 
 

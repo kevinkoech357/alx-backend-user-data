@@ -46,8 +46,7 @@ def handle_auth():
     if auth is None:
         return
 
-    excluded_paths = [
-        "/api/v1/status/", "/api/v1/unauthorized/", "/api/v1/forbidden/"]
+    excluded_paths = ["/api/v1/status/", "/api/v1/unauthorized/", "/api/v1/forbidden/"]
     if not auth.require_auth(request.path, excluded_paths):
         return
 
@@ -56,6 +55,8 @@ def handle_auth():
 
     if auth.current_user(request) is None:
         abort(403)
+
+    request.current_user = auth.current_user(request)
 
 
 @app.errorhandler(404)
