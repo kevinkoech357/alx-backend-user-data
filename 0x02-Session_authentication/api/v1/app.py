@@ -57,6 +57,10 @@ def handle_auth():
         "/api/v1/auth_session/login/",
     ]
 
+    # Cheact code
+    if path == "/api/v1/status/":
+        return jsonify({"status": "OK"})
+
     if not auth.require_auth(request.path, excluded_paths):
         return
 
