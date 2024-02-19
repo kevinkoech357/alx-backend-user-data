@@ -48,3 +48,14 @@ class Auth:
         except Exception as e:
             # Handle any other exceptions
             raise e
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """
+        Take email and password required arguments and return a boolean
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            hashed_password = user.hashed_password
+            return bcrypt.checkpw(password.encode("utf-8"), hashed_password)
+        except Exception:
+            return False
