@@ -14,6 +14,7 @@ from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
+import bcrypt
 
 
 class DB:
@@ -57,8 +58,7 @@ class DB:
         InvalidRequestError: If wrong query arguments are passed
         """
         try:
-            user = self._session.query(User).filter_by(**kwargs).one()
-            return user
+            return self._session.query(User).filter_by(**kwargs).one()
         except NoResultFound as e:
             raise NoResultFound("Not found") from e
         except InvalidRequestError as e:
