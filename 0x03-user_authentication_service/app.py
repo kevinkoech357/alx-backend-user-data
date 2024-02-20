@@ -110,14 +110,14 @@ def profile() -> dict:
 
 
 @app.route("/reset_password", methods=["GET"], strict_slashes=True)
-def get_reset_password_token() -> dict:
+def get_reset_password_token() -> Union[dict, abort]:
     """
     Returns a json data with reset token
     based on users email.
     """
     email = request.form.get("email")
     if not email:
-        abort(400, "Email is required.")
+        abort(400, "Email field is required")
 
     try:
         reset_token = AUTH.get_reset_password_token(email)
@@ -126,7 +126,7 @@ def get_reset_password_token() -> dict:
     except ValueError:
         # Handle the case where the user
         # is not registered
-        abort(403)
+        abort(403, "Email not registered")
 
 
 if __name__ == "__main__":
