@@ -52,9 +52,6 @@ class Auth:
             # User with the provided email does not exist
             hashed_password = _hash_password(password)
             return self._db.add_user(email, hashed_password)
-        except Exception as e:
-            # Handle any other exceptions
-            raise e
 
     def valid_login(self, email: str, password: str) -> bool:
         """
@@ -62,10 +59,11 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(email=email)
-            hashed_password = user.hashed_password
-            return bcrypt.checkpw(password.encode("utf-8"), hashed_password)
-        except Exception:
+        except KeyError:
             return False
+
+        hashed_password = user.hashed_password
+        return bcrypt.checkpw(password.encode("utf-8"), hashed_password)
 
     def create_session(self, email: str) -> str:
         """
