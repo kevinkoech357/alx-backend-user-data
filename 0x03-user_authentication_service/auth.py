@@ -91,3 +91,12 @@ class Auth:
                 return None
             else:
                 return user
+
+    def destroy_session(self, user_id: int) -> None:
+        """
+        Take a single user_id integer argument and return None.
+        """
+        user = self._db.find_user_by(id=user_id)
+        if user:
+            user.session_id = None
+            self._db.update_user(user_id, session_id=None)
