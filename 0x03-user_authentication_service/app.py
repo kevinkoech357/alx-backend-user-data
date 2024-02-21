@@ -109,7 +109,7 @@ def profile() -> dict:
         abort(403)
 
 
-@app.route("/reset_password", methods=["GET"], strict_slashes=True)
+@app.route("/reset_password", methods=["POST"], strict_slashes=True)
 def get_reset_password_token() -> Union[dict, abort]:
     """
     Returns a json data with reset token
