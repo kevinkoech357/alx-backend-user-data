@@ -126,7 +126,7 @@ def get_reset_password_token() -> Union[dict, abort]:
     except ValueError:
         # Handle the case where the user
         # is not registered
-        abort(403, "Email not registered")
+        abort(403)
 
 
 @app.route("/reset_password", methods=["PUT"], strict_slashes=False)
@@ -152,7 +152,7 @@ def update_password() -> dict:
         response = {"email": email, "message": "Password updated"}
         return jsonify(response), 200
     except ValueError:
-        abort(403, "Invalid reset token.")
+        abort(403)
 
 
 if __name__ == "__main__":

@@ -129,7 +129,7 @@ class Auth:
 
         # Raise ValueError if token is not found
         if not user:
-            raise ValueError("Invalid reset token")
+            raise ValueError
 
         # Hash password and update user table
         hashed_password = _hash_password(password)
