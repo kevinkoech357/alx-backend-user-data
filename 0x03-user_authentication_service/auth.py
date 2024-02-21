@@ -116,3 +116,24 @@ class Auth:
         except NoResultFound:
             # Handle case where user is not found
             raise ValueError
+
+    def update_password(self, reset_token: str, password: str) -> None:
+        """
+        Takes a reset_token and a password then returns
+        None.
+        """
+        if not isinstance(reset_token, str) or not isinstance(password, str):
+            return {"error": "Wrong input format"}
+
+        user = self._db.find_user_by(reset_token=reset_token)
+
+        # Raise ValueError if token is not found
+        if not user:
+            raise ValueError("Invalid reset token")
+
+        # Hash password and update user table
+        hashed_password = _hash_password(password)
+
+        self._db.update_user(
+            id=user.id, hashed_password=hashed_password, reset_token=None)
+        self._db._session.commit()
