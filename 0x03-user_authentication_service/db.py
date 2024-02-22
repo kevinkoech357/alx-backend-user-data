@@ -58,11 +58,12 @@ class DB:
         InvalidRequestError: If wrong query arguments are passed
         """
         try:
-            return self._session.query(User).filter_by(**kwargs).one()
+            user = self._session.query(User).filter_by(**kwargs).one()
+            return user
         except NoResultFound as e:
-            raise NoResultFound("Not found") from e
+            raise NoResultFound from e
         except InvalidRequestError as e:
-            raise InvalidRequestError("Invalid") from e
+            raise InvalidRequestError from e
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """
